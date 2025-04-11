@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EasyOCR Web App</title>
+  <style>
+    canvas {
+      border: 2px solid #000;
+      cursor: crosshair;
+    }
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Draw Something 🖌️</h1>
+  <canvas id="canvas" width="300" height="150"></canvas><br>
+  <button onclick="clearCanvas()">Clear</button>
+  <button onclick="submitCanvas()">Recognize</button>
+
+  <h2>Prediction:</h2>
+  <pre id="result">...</pre>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
