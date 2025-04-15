@@ -17,14 +17,29 @@ def index():
 def predict():
     data = request.json['image']
     image_data = base64.b64decode(data.split(',')[1])
-    image = Image.open(BytesIO(image_data)).convert('RGB')
+
+    # Convert base64 to grayscale PIL image
+    image = Image.open(BytesIO(image_data)).convert('L')  # Grayscale
     image_np = np.array(image)
-    
-    results = reader.readtext(image_np)
+
+    # Apply thresholding to enhance text
+    _, thresh = cv2.threshold(image_np, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+    # Run OCR with beamsearch for better accuracy
+    results = reader.readtext(
+        thresh,
+        detail=1,
+        paragraph=False,
+        decoder='beamsearch'
+    )
 
     predictions = []
     for (bbox, text, confidence) in results:
-        predictions.append({'text': text, 'confidence': round(confidence * 100, 2)})
+        if confidence > 0.4:  # Filter out low confidence detections
+            predictions.append({
+                'text': text,
+                'confidence': round(confidence * 100, 2)
+            })
 
     return jsonify(predictions)
 

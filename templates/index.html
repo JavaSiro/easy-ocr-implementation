@@ -3,21 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <title>EasyOCR Web App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    canvas {
-      border: 2px solid #000;
-      cursor: crosshair;
+    body {
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+      background: #f9f9f9;
     }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    canvas {
+      border: 2px solid #333;
+      background: white;
+      cursor: crosshair;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .button-group {
+      margin-top: 15px;
+    }
+
     button {
-      margin-top: 10px;
+      padding: 10px 18px;
+      margin: 0 5px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      background: #007BFF;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    h2 {
+      margin-top: 30px;
+    }
+
+    pre {
+      background: #fff;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      max-width: 500px;
+      white-space: pre-wrap;
+    }
+
+    #loading {
+      display: none;
+      font-style: italic;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <h1>Draw Something 🖌️</h1>
-  <canvas id="canvas" width="300" height="150"></canvas><br>
-  <button onclick="clearCanvas()">Clear</button>
-  <button onclick="submitCanvas()">Recognize</button>
+  <h1>🖌️ Draw Something & Recognize Text</h1>
+  <canvas id="canvas" width="600" height="300"></canvas>
+
+  <div class="button-group">
+    <button onclick="clearCanvas()">Clear</button>
+    <button onclick="submitCanvas()">Recognize</button>
+  </div>
+
+  <div id="loading">Recognizing text...</div>
 
   <h2>Prediction:</h2>
   <pre id="result">...</pre>
